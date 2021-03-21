@@ -4,11 +4,13 @@ project(hid)
 
 pico_sdk_init()
 
-add_executable(hid src/main.c)
-include_directories(include)
-target_link_libraries(hid pico_stdlib hardware_i2c pico_multicore)
-
-pico_enable_stdio_usb(hid 1)
-pico_enable_stdio_uart(hid 0)
+add_executable(
+    hid
+    src/main.c src/blink.c src/usb_descriptors.c src/hid.c
+)
+include_directories(
+    include
+)
+target_link_libraries(hid pico_stdlib tinyusb_device tinyusb_board)
 
 pico_add_extra_outputs(hid)

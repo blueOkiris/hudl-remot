@@ -1,15 +1,16 @@
-#include <pico/stdlib.h>
+#include "pico/stdlib.h"
+#include "bsp/board.h"
+#include "bsp/board.h"
+#include "tusb.h"
+#include "blink.h"
 
 int main() {
-    const uint LED_PIN = 25;
+    // Initialize the HID libraries (from pico-sdk)
+    board_init();
+    tusb_init();
     
-    gpio_init(LED_PIN);
-    gpio_set_dir(LED_PIN, GPIO_OUT);
-    
-    while (true) {
-        gpio_put(LED_PIN, 1);
-        sleep_ms(250);
-        gpio_put(LED_PIN, 0);
-        sleep_ms(250);
+    while(1) {
+        tud_task();             // Device task for usb
+        blink.update_task();    // Show device state
     }
 }
