@@ -1,0 +1,6 @@
+pico-sdk/
+*.o
+obj/
+build/
+hid.uf2
+physical.uf2
