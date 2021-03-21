@@ -6,12 +6,19 @@
 #ifndef _HID_H_
 #define _HID_H_
 
-void hid__task(void);
+void hid__update(void);
 
 static struct {
-    void (*task)(void);
+    const int poll_interval_ms;
+    int delta_x, delta_y;
+    unsigned char key;
+    
+    void (*update)(void);
 } hid = {
-    hid__task
+    10,
+    0, 0,
+    0,
+    hid__update
 };
 
 #endif

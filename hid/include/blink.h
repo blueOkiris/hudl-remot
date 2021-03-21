@@ -12,8 +12,8 @@
 void blink__update_task(void);
 
 // Use this struct like a C++ object
-static const struct {
-    int delay_unmounted, delay_mounted, delay_suspended;
+static struct {
+    const int delay_unmounted, delay_mounted, delay_suspended;
     void (*update_task)(void);
 } blink = {
     250, 1000, 2500,

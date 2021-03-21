@@ -14,7 +14,7 @@ int main() {
     while(1) {
         tud_task();             // Device task for usb
         blink.update_task();    // Show device state
-        hid.task();             // Go through update process
+        hid.update();           // Go through update process
     }
     
     return 0;

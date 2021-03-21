@@ -4,11 +4,15 @@
 
 #include "blink.h"
 
-uint32_t start_ms_g = 0;
-char led_state_g = 0;
-uint32_t curr_blink_interval_g = blink.delay_unmounted;
+static uint32_t start_ms_g = 0;
+static char led_state_g = 0;
+static uint32_t curr_blink_interval_g = 0;
 
 void blink__update_task(void) {
+    if(curr_blink_interval_g == 0) {
+        curr_blink_interval_g = blink.delay_unmounted;
+    }
+    
     // Blink every interval ms
     if(board_millis() - start_ms_g < curr_blink_interval_g) {
         // Not enough time
