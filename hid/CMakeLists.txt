@@ -6,7 +6,7 @@ pico_sdk_init()
 
 add_executable(
     hid
-    src/main.c src/blink.c
+    src/main.c src/blink.c src/hid.c
     src/usb_descriptors.c src/report.c
 )
 include_directories(

@@ -22,6 +22,8 @@
  * THE SOFTWARE.
  */
 
+// This file taken from pico-examples
+
 #ifndef USB_DESCRIPTORS_H_
 #define USB_DESCRIPTORS_H_
 

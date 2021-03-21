@@ -2,7 +2,9 @@
 #include "bsp/board.h"
 #include "bsp/board.h"
 #include "tusb.h"
+
 #include "blink.h"
+#include "hid.h"
 
 int main() {
     // Initialize the HID libraries (from pico-sdk)
@@ -12,5 +14,8 @@ int main() {
     while(1) {
         tud_task();             // Device task for usb
         blink.update_task();    // Show device state
+        hid.task();             // Go through update process
     }
+    
+    return 0;
 }
