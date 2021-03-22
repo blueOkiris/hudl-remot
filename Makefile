@@ -31,13 +31,13 @@ clean :
 	rm -rf $(PHYS_OBJNAME).uf2
 
 # Main targets
-$(HID_OBJNAME).uf2 : $(HID_SRC) $(HID_HEADERS)
+$(HID_OBJNAME).uf2 : $(HID_SRC) $(HID_HEADERS) $(HID_OBJNAME)/CMakeLists.txt
 	mkdir -p $(HID_OBJNAME)/build
 	cd $(HID_OBJNAME)/build; PICO_SDK_PATH=/tmp/pico-sdk cmake ..
 	cd $(HID_OBJNAME)/build; make
 	cp $(HID_OBJNAME)/build/$(HID_OBJNAME).uf2 .
 	
-$(PHYS_OBJNAME).uf2 : $(PHYS_SRC) $(PHYS_HEADERS)
+$(PHYS_OBJNAME).uf2 : $(PHYS_SRC) $(PHYS_HEADERS) $(PHYS_OBJNAME)/CMakeLists.txt
 	mkdir -p $(PHYS_OBJNAME)/build
 	cd $(PHYS_OBJNAME)/build; PICO_SDK_PATH=/tmp/pico-sdk cmake ..
 	cd $(PHYS_OBJNAME)/build; make

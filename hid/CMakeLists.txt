@@ -6,10 +6,17 @@ pico_sdk_init()
 
 add_executable(
     hid
-    src/main.c src/blink.c src/hid.c src/wireless.c
-    src/usb_descriptors.c src/report.c
-)
-include_directories(include)
+    src/main.c src/wireless.c)# src/blink.c src/hid.c src/wireless.c
+#    src/usb_descriptors.c src/report.c
+#)
+#include_directories(include)
 
-target_link_libraries(hid pico_stdlib tinyusb_device tinyusb_board hardware_spi)
+target_link_libraries(
+    hid pico_stdlib hardware_spi #tinyusb_device tinyusb_board 
+)
+
+# enable usb output, disable uart output
+pico_enable_stdio_usb(hid 1)
+pico_enable_stdio_uart(hid 0)
+
 pico_add_extra_outputs(hid)

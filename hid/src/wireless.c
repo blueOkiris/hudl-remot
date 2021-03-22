@@ -1,8 +1,8 @@
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 
-#include "nrf24l01.h"
-#include "wireless.h"
+#include "../include/nrf24l01.h"
+#include "../include/wireless.h"
 
 static inline void cs_select(uint cs_pin) {
     asm volatile("nop \n nop \n nop"); // FIXME
