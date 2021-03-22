@@ -1,24 +1,28 @@
+/*
+ * This file contains information for wireless communication
+ * over HC-05 bluetooth, specifically receiving
+ */
+
 #ifndef _WIRELESS_H_
 #define _WIRELESS_H_
 
+#define CMD_MODE_BAUD   38400
+#define TXT_MODE_BAUD   9600
+#define UART0_TX_PIN    0
+#define UART0_RX_PIN    1
+
 void wireless__init(void);
-char wireless__data_ready(void);
-void wireless__get_data(uint8_t data[16]);
+char wireless__read(void);
+uint8_t wireless__get_datum(void);
 
 static const struct {
-    unsigned int miso, cs, sck, mosi, ce;
-    unsigned int spi_speed;
-    uint8_t channel, payload;
     void (*init)(void);
-    char (*data_ready)(void);
-    void (*get_data)(uint8_t data[16]);
+    char (*ready)(void);
+    uint8_t (*get_datum)(void);
 } wireless = {
-    4, 5, 6, 7, 8,
-    10000000,
-    1, 16,
     wireless__init,
-    wireless__data_ready,
-    wireless__get_data
+    wireless__read,
+    wireless__get_datum
 };
 
 #endif
