@@ -28,6 +28,13 @@ int main() {
         
         if(wireless.data_ready()) {
             wireless.get_data(rf_buffer);
+            printf("Data: ");
+            for(int i = 0; i < wireless.payload; i++) {
+                printf("%x ", rf_buffer[i]);
+            }
+            printf("\n");
+        } else {
+            printf("No data available.\n");
         }
     }
     

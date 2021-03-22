@@ -82,6 +82,11 @@ void wireless__init(void) {
     gpio_put(wireless.cs, 1);
     gpio_set_dir(wireless.cs, GPIO_OUT);
     
+    // Enable the chip
+    gpio_init(wireless.ce);
+    gpio_put(wireless.ce, 1);
+    gpio_set_dir(wireless.ce, GPIO_OUT);
+    
     // Configure NRF24L01
     config_register(RF_CH, wireless.channel);
     config_register(RX_PW_P0, wireless.payload);
