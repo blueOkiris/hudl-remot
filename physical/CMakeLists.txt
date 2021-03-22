@@ -4,11 +4,12 @@ project(physical)
 
 pico_sdk_init()
 
-add_executable(physical src/main.c)
+add_executable(physical src/main.c src/wireless.c)
 include_directories(include)
-target_link_libraries(physical pico_stdlib hardware_i2c pico_multicore)
+
+target_link_libraries(physical pico_stdlib)
 
 pico_enable_stdio_usb(physical 1)
-pico_enable_stdio_uart(physical 0)
+pico_enable_stdio_uart(physical 1)
 
 pico_add_extra_outputs(physical)

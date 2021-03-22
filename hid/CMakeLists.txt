@@ -15,7 +15,6 @@ target_link_libraries(
     hid pico_stdlib hardware_spi #tinyusb_device tinyusb_board 
 )
 
-# enable usb output, disable uart output
 pico_enable_stdio_usb(hid 1)
 pico_enable_stdio_uart(hid 1)
 

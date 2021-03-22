@@ -12,17 +12,14 @@
 #define UART0_RX_PIN    1
 
 void wireless__init(void);
-char wireless__ready(void);
-uint8_t wireless__get_datum(void);
+void wireless__put_data(char *str);
 
 static const struct {
     void (*init)(void);
-    char (*ready)(void);
-    uint8_t (*get_datum)(void);
+    void (*put_data)(char *);
 } wireless = {
     wireless__init,
-    wireless__ready,
-    wireless__get_datum
+    wireless__put_data
 };
 
 #endif
