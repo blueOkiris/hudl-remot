@@ -6,12 +6,10 @@ pico_sdk_init()
 
 add_executable(
     hid
-    src/main.c src/blink.c src/hid.c
+    src/main.c src/blink.c src/hid.c src/wireless.c
     src/usb_descriptors.c src/report.c
 )
-include_directories(
-    include
-)
-target_link_libraries(hid pico_stdlib tinyusb_device tinyusb_board)
+include_directories(include)
 
+target_link_libraries(hid pico_stdlib tinyusb_device tinyusb_board hardware_spi)
 pico_add_extra_outputs(hid)
