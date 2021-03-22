@@ -4,3 +4,4 @@ obj/
 build/
 hid.uf2
 physical.uf2
+.vscode/
