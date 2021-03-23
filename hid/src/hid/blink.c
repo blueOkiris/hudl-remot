@@ -1,8 +1,7 @@
-#include "stdio.h"
-#include "tusb.h"
-#include "bsp/board.h"
-
-#include "blink.h"
+#include <stdio.h>
+#include <tusb.h>
+#include <bsp/board.h>
+#include <blink.h>
 
 static uint32_t start_ms_g = 0;
 static char led_state_g = 0;

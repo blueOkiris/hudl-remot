@@ -1,7 +1,6 @@
-#include "pico/stdlib.h"
-#include "hardware/uart.h"
-
-#include "wireless.h"
+#include <pico/stdlib.h>
+#include <hardware/uart.h>
+#include <wireless.h>
 
 void wireless__init(void) {
     gpio_set_function(UART0_TX_PIN, GPIO_FUNC_UART);

@@ -1,6 +1,6 @@
-#include "pico/stdlib.h"
-#include "hardware/adc.h"
-#include "controller.h"
+#include <pico/stdlib.h>
+#include <hardware/adc.h>
+#include <controller.h>
 
 void controller__init(void) {
     // Initialize buttons

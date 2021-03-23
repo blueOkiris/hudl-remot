@@ -1,11 +1,11 @@
-#include "stddef.h"
-#include "stdio.h"
-#include "tusb.h"
-#include "bsp/board.h"
-#include "usb_descriptors.h"
+#include <stddef.h>
+#include <stdio.h>
+#include <tusb.h>
+#include <bsp/board.h>
+#include <usb_descriptors.h>
 
-#include "blink.h"
-#include "hid.h"
+#include <blink.h>
+#include <hid.h>
 
 static uint32_t start_ms_g = 0;
 static char has_key_g = 0, toggle_g = 0, release_g = 0;
