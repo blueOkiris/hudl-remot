@@ -14,15 +14,18 @@
 void wireless__init(void);
 char wireless__ready(void);
 uint8_t wireless__get_datum(void);
+void wireless__print_addr(void);
 
 static const struct {
     void (*init)(void);
     char (*ready)(void);
     uint8_t (*get_datum)(void);
+    void (*print_addr)(void);
 } wireless = {
     wireless__init,
     wireless__ready,
-    wireless__get_datum
+    wireless__get_datum,
+    wireless__print_addr
 };
 
 #endif

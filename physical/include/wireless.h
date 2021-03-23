@@ -11,11 +11,11 @@
 #define UART0_TX_PIN    0
 #define UART0_RX_PIN    1
 
-void wireless__init(void);
+void wireless__init(char *slave_addr);
 void wireless__put_data(char *str);
 
 static const struct {
-    void (*init)(void);
+    void (*init)(char *);
     void (*put_data)(char *);
 } wireless = {
     wireless__init,

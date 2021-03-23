@@ -3,12 +3,14 @@
 #include <wireless.h>
 #include <controller.h>
 
+const char *slave_addr = "98d3,34,906554";
+
 int main() {
     stdio_init_all();
     sleep_ms(1000);
     printf("Hudl remote physical device\n");
     
-    wireless.init();
+    wireless.init(slave_addr);
     controller.init();
     
     char button_state;

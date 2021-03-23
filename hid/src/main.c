@@ -15,6 +15,9 @@ int main() {
     wireless.init();
     //hid.init();
     
+    // Debug print:
+    wireless.print_addr();
+    
     char cmd, btn_id, curr;
     int i;
     char stick_val[5];

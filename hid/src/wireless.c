@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <pico/stdlib.h>
 #include <hardware/uart.h>
 #include <wireless.h>
@@ -19,4 +20,13 @@ char wireless__ready(void) {
 
 uint8_t wireless__get_datum(void) {
     return uart_getc(uart0);
+}
+
+// Only used for debug
+void wireless__print_addr(void) {
+    char addr[15];
+    addr[14] = '\0';
+    uart_puts(uart0, "AT+ADDR\r\n");
+    uart_read_blocking(uart0, addr, 14);
+    printf("%s", addr);
 }
