@@ -7,7 +7,7 @@ pico_sdk_init()
 add_executable(physical src/main.c src/wireless.c src/controller.c)
 include_directories(include)
 
-target_link_libraries(physical pico_stdlib)
+target_link_libraries(physical pico_stdlib hardware_adc)
 
 pico_enable_stdio_usb(physical 1)
 pico_enable_stdio_uart(physical 1)

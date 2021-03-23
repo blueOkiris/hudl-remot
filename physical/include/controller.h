@@ -16,15 +16,23 @@
 #define CONT_BTN_PREV           8
 #define CONT_BTN_NEXT           9
 
+#define CONT_ADC_X              26
+#define CONT_ADC_X_NUM          0
+#define CONT_ADC_Y              27
+#define CONT_ADC_Y_NUM          1
+
 void controller__init(void);
 char controller__button_pressed(void);
+void controller__read_thumbstick(uint16_t *ref_x, uint16_t *ref_y);
 
 static const struct {
     void (*init)(void);
     char (*button_pressed)(void);
+    void (*read_thumbstick)(uint16_t *ref_x, uint16_t *ref_y);
 } controller = {
     controller__init,
-    controller__button_pressed
+    controller__button_pressed,
+    controller__read_thumbstick
 };
 
 #endif
