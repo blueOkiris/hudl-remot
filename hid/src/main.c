@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
-//#include "bsp/board.h"
-//#include "bsp/board.h"
-//#include "tusb.h"
-
 #include "wireless.h"
-//#include "blink.h"
 //#include "hid.h"
 
 int main() {
@@ -14,19 +9,29 @@ int main() {
     sleep_ms(1000);
     printf("Hello, world!\n");
     
-    // Initialize the HID libraries (from pico-sdk)
-    //board_init();
-    //tusb_init();
-    
     wireless.init();
+    //hid.init();
     
+    char cmd;
     while(1) {
-        //tud_task();             // Device task for usb
-        //blink.update_task();    // Show device state
-        //hid.update();           // Go through update process
+        //hid.update();                 // Go through update process
         
         while(wireless.ready()) {
             printf("%c", wireless.get_datum());
+            
+            // Get the command character
+            cmd = wireless.get_datum();
+            while(!wireless.ready());   // Wait for next character
+            switch(cmd) {
+                case 'b':               // Button data
+                    break;
+                
+                case 'x':               // Stick x position
+                    break;
+                
+                case 'y':               // Stick y position
+                    break;
+            }
         }
     }
     

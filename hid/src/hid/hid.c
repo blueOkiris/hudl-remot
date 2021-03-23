@@ -4,12 +4,18 @@
 #include "bsp/board.h"
 #include "usb_descriptors.h"
 
+#include "blink.h"
 #include "hid.h"
 
 static uint32_t start_ms_g = 0;
 static char has_key_g = 0, toggle_g = 0, release_g = 0;
 static int delta_x_g = 0, delta_y_g = 0;
 static unsigned char key_g = 0;
+
+void hid__init(void) {
+    board_init();
+    tusb_init();
+}
 
 void hid__release_key(void) {
     release_g = 1;
@@ -26,6 +32,10 @@ void hid__move_mouse(int delta_x, int delta_y) {
 }
 
 void hid__update(void) {
+    // HID library stuff
+    tud_task();                   // Device task for usb
+    blink.update_task();          // Show device state
+    
     // Not enough time
     if(board_millis() - start_ms_g < hid.poll_interval_ms) {
         return;
