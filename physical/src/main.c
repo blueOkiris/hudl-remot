@@ -12,7 +12,10 @@ int main() {
     controller.init();
     
     while(1) {
-        wireless.put_data("Hello, world!\n");
-        sleep_ms(1000);
+        char button_state = controller.button_pressed();
+        if(button_state) {
+            char msg[2] = { button_state + '0', '\0' };
+            wireless.put_data((char *) msg);
+        }
     }
 }
