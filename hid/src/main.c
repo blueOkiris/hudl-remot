@@ -4,7 +4,7 @@
 //#include "bsp/board.h"
 //#include "tusb.h"
 
-#include "../include/wireless.h"
+#include "wireless.h"
 //#include "blink.h"
 //#include "hid.h"
 

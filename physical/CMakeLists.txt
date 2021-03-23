@@ -4,7 +4,7 @@ project(physical)
 
 pico_sdk_init()
 
-add_executable(physical src/main.c src/wireless.c)
+add_executable(physical src/main.c src/wireless.c src/controller.c)
 include_directories(include)
 
 target_link_libraries(physical pico_stdlib)
