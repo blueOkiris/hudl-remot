@@ -1,9 +1,11 @@
 # Project settings
 HID_OBJNAME :=		hid
 PHYS_OBJNAME :=		physical
-HID_SRC :=			$(wildcard $(HID_OBJNAME)/src/*.c)
+HID_SRC :=			$(wildcard $(HID_OBJNAME)/src/*.c) \
+					$(wildcard $(HID_OBJNAME)/src/hid/*.c)
 PHYS_SRC :=			$(wildcard $(PHYS_OBJNAME)/src/*.c)
-HID_HEADERS :=		$(wildcard $(HID_OBJNAME)/include/*.h)
+HID_HEADERS :=		$(wildcard $(HID_OBJNAME)/include/*.h) \
+					$(wildcard $(HID_OBJNAME/include/hid/*.h))
 PHYS_HEADERS :=		$(wildcard $(PHYS_OBJNAME)/include/*.h)
 
 # Helper targets

@@ -7,12 +7,17 @@
 #include "hid.h"
 
 static uint32_t start_ms_g = 0;
-static char has_key_g = 0, toggle_g = 0;
+static char has_key_g = 0, toggle_g = 0, release_g = 0;
 static int delta_x_g = 0, delta_y_g = 0;
 static unsigned char key_g = 0;
 
+void hid__release_key(void) {
+    release_g = 1;
+}
+
 void hid__press_key(unsigned char key) {
     key_g = key;
+    release_g = 0;
 }
 
 void hid__move_mouse(int delta_x, int delta_y) {
@@ -53,7 +58,7 @@ void hid__update(void) {
 
     // Keyboard control
     if (tud_hid_ready()) {
-        if(key_g != 0 && (toggle_g = !toggle_g)) {
+        if(key_g != 0 && (toggle_g = !toggle_g) && !has_key_g) {
             uint8_t keycode[6] = { 0 };
             keycode[0] = key_g;
 
@@ -61,7 +66,7 @@ void hid__update(void) {
             
             has_key_g = 1;
             key_g = 0;
-        } else {
+        } else if(release_g) {
             // send empty key report if previously has key pressed
             if(has_key_g) {
                 tud_hid_keyboard_report(REPORT_ID_KEYBOARD, 0, NULL);
