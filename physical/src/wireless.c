@@ -3,7 +3,7 @@
 #include <hardware/uart.h>
 #include <wireless.h>
 
-void wireless__init(char *addr) {
+void wireless__init(const char *addr) {
     gpio_set_function(UART0_TX_PIN, GPIO_FUNC_UART);
     gpio_set_function(UART0_RX_PIN, GPIO_FUNC_UART);
     
