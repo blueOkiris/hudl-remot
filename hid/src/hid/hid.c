@@ -10,7 +10,7 @@
 static uint32_t start_ms_g = 0;
 static char has_key_g = 0, toggle_g = 0, release_g = 0;
 static int delta_x_g = 0, delta_y_g = 0;
-static unsigned char key_g = 0;
+static unsigned char key_g = 0, mouse_btn = 0;
 
 void hid__init(void) {
     board_init();
@@ -29,6 +29,14 @@ void hid__press_key(unsigned char key) {
 void hid__move_mouse(int delta_x, int delta_y) {
     delta_x_g = delta_x;
     delta_y_g = delta_y;
+}
+
+void hid__mouse_click(char left_btn) {
+    if(left_btn) {
+        mouse_btn = MOUSE_BUTTON_LEFT;
+    } else {
+        mouse_btn = MOUSE_BUTTON_RIGHT;
+    }
 }
 
 void hid__update(void) {
@@ -53,13 +61,14 @@ void hid__update(void) {
 
     // Mouse control
     if(tud_hid_ready()) {
-        if(delta_x_g != 0 || delta_y_g != 0) {
+        if(delta_x_g != 0 || delta_y_g != 0 || mouse_btn != 0) {
             tud_hid_mouse_report(
-                REPORT_ID_MOUSE, 0x00, 
+                REPORT_ID_MOUSE, mouse_btn, 
                 delta_x_g, delta_y_g,
                 0, 0
             );
             delta_x_g = delta_y_g = 0;
+            mouse_btn = 0;
 
             // delay a bit before attempt to send keyboard report
             board_delay(10);

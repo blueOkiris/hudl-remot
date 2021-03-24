@@ -42,9 +42,11 @@ int main() {
                             break;
                             
                         case CONT_BTN_MOUSE_LEFT:
+                            hid.mouse_click(1);
                             break;
                             
                         case CONT_BTN_MOUSE_RIGHT:
+                            hid.mouse_click(0);
                             break;
                             
                         case CONT_BTN_REWIND:
