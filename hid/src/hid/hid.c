@@ -23,7 +23,7 @@ void hid__release_key(void) {
 
 void hid__press_key(unsigned char key) {
     key_g = key;
-    release_g = 0;
+    release_g = 0;                  // force release
 }
 
 void hid__move_mouse(int delta_x, int delta_y) {
@@ -33,8 +33,8 @@ void hid__move_mouse(int delta_x, int delta_y) {
 
 void hid__update(void) {
     // HID library stuff
-    tud_task();                   // Device task for usb
-    blink.update_task();          // Show device state
+    tud_task();                     // Device task for usb
+    blink.update_task();            // Show device state
     
     // Not enough time
     if(board_millis() - start_ms_g < hid.poll_interval_ms) {
@@ -59,7 +59,7 @@ void hid__update(void) {
                 delta_x_g, delta_y_g,
                 0, 0
             );
-            //hid.delta_x = hid.delta_y = 0;
+            delta_x_g = delta_y_g = 0;
 
             // delay a bit before attempt to send keyboard report
             board_delay(10);

@@ -18,12 +18,10 @@ int main() {
     char btn_msg[4] = { 'b', 0, '\n', '\0' };
     char stick_msg[16];
     while(1) {
-        // If any buttons are pressed, send "b <button pin> \n"
+        // Send "b <button pin> \n"
         button_state = controller.button_pressed();
-        if(button_state) {
-            btn_msg[1] = button_state + '0';
-            wireless.put_data((char *) btn_msg);
-        }
+        btn_msg[1] = button_state + '0';
+        wireless.put_data((char *) btn_msg);
         
         // Always send the current stick input as "x <x val> \n y <y val> \n"
         controller.read_thumbstick(&stick_x, &stick_y);

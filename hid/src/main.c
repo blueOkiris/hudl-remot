@@ -37,6 +37,8 @@ int main() {
                     
                     switch(btn_id) {
                         case CONT_BTN_PLAY:
+                            hid.press_key(HID_KEY_SPACE);
+                            hid.release_key();
                             break;
                             
                         case CONT_BTN_MOUSE_LEFT:
@@ -46,21 +48,33 @@ int main() {
                             break;
                             
                         case CONT_BTN_REWIND:
+                            hid.press_key(HID_KEY_ARROW_LEFT);
                             break;
                             
                         case CONT_BTN_FAST_FORWARD:
+                            hid.press_key(HID_KEY_ARROW_RIGHT);
                             break;
                             
                         case CONT_BTN_SLOW_REWIND:
+                            hid.press_key(HID_KEY_ARROW_UP);
                             break;
                             
                         case CONT_BTN_SLOW_FORWARD:
+                            hid.press_key(HID_KEY_ARROW_DOWN);
                             break;
                             
                         case CONT_BTN_PREV:
+                            hid.press_key(HID_KEY_ARROW_LEFT);
+                            hid.release_key();
                             break;
                             
                         case CONT_BTN_NEXT:
+                            hid.press_key(HID_KEY_ARROW_RIGHT);
+                            hid.release_key();
+                            break;
+                        
+                        case '0':
+                            hid.release_key();
                             break;
                     }
                     
