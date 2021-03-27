@@ -24,7 +24,7 @@ int main() {
         // Send "b <button pin> \n"
         btnState = controller.buttonState();
         btnMsg[1] = btnState + '0';
-        //bluetooth.putData((char *) btnMsg);
+        bluetooth.putData((char *) btnMsg);
         
         // Always send the current stick input as "x <x val> \n y <y val> \n"
         controller.readThumbstick(stickX, stickY);
