@@ -57,5 +57,5 @@ HC-05 bluetooth module:
 Controls system comprised of 9 buttons and a PSP thumbstick:
 ![controller](./docs/controls-system.jpg)
 
-Rough holding together of components:
-![rough system pre-finish](./docs/together.jpg)
+Completed remote without casing:
+![rough system pre-finish](./docs/soldered-remote-together.jpg)

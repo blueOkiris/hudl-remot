@@ -32,7 +32,7 @@ int main() {
         bluetooth.putData((char *) stickMsg);
         
         // Add a tad of delay
-        sleep_ms(1000);
+        sleep_ms(10);
     }
 }
 
