@@ -20,7 +20,7 @@ Controller::Controller() {
 uint8_t Controller::buttonState() const {
     for(int i = 0; i < 9; i++) {        // Go through all the buttons in order
         if(!gpio_get(i + 2)) {
-            return i;                   // Return the first one pressed
+            return i + 1;               // Return the first one pressed
         }
     }
     return 0;                           // Otherwise return no btns pressed
