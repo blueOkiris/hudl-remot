@@ -5,10 +5,13 @@
 
 using namespace hudlremot;
 
+void testBluetooth();
+
 int main() {
     stdio_init_all();
-    sleep_ms(1000);
     printf("Hudl remote physical device\n");
+    
+    //testBluetooth();
     
     const Hc05 bluetooth;
     const Controller controller;
@@ -30,5 +33,14 @@ int main() {
         
         // Add a tad of delay
         sleep_ms(50);
+    }
+}
+
+void testBluetooth() {
+    const Hc05 bluetooth;
+    
+    while(1) {
+        bluetooth.putData("Hello, world!\r\n");
+        sleep_ms(1000);
     }
 }

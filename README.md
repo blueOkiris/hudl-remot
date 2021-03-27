@@ -6,6 +6,22 @@ The software repo for a cheap alternative to the Hudl remote devices
 
 Hudl remotes are used by Coaches all over the country (world?), and they're incredibly expensive at \$200, despite being some cheap plastic and some buttons. I think I can 1) open source this and 2) make it significantly cheaper, no more than maybe $50
 
+## Pico Stuff/Project layout
+
+Unfortunately, the pico uses the Cmake build system which is an utter piece of garbage, so you'll have to deal with that to build the project. Sorry. Nothing I can do.
+
+The project is separated into two parts:
+ * The HID device which acts as a mouse and keyboard on the computer to control Hudl
+ * The Physical device which takes button and PSP thumbstick inputs and sends them to the HID device
+
+Now, the Pico is overkill for this project. However, at $4, it's not unreasonable to use them, so why the heck not?
+
+To install needed dependencies (on Debian) run `sudo make install-deps`
+To build the two board files run `make`
+
+There's also an arduino program under "bluetooth" used to program the HC-05 modules.
+Note: The slave bluetooth device's address is currently "ADDR:0020:12:080CE5", but other devices will have different addresses
+
 ## Bill of Materials
 
 This is the approximate cost of building it for myself.
@@ -43,16 +59,3 @@ Controls system comprised of 9 buttons and a PSP thumbstick:
 
 Rough holding together of components:
 ![rough system pre-finish](./docs/together.jpg)
-
-## Pico Stuff/Project layout
-
-Unfortunately, the pico uses the Cmake build system which is an utter piece of garbage, so you'll have to deal with that to build the project. Sorry. Nothing I can do.
-
-The project is separated into two parts:
- * The HID device which acts as a mouse and keyboard on the computer to control Hudl
- * The Physical device which takes button and PSP thumbstick inputs and sends them to the HID device
-
-Now, the Pico is overkill for this project. However, at $4, it's not unreasonable to use them, so why the heck not?
-
-To install needed dependencies (on Debian) run `sudo make install-deps`
-To build the two board files run `make`

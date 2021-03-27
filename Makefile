@@ -1,12 +1,12 @@
 # Project settings
 HID_OBJNAME :=		hid
 PHYS_OBJNAME :=		physical
-HID_SRC :=			$(wildcard $(HID_OBJNAME)/src/*.c) \
-					$(wildcard $(HID_OBJNAME)/src/hid/*.c)
-PHYS_SRC :=			$(wildcard $(PHYS_OBJNAME)/src/*.c)
-HID_HEADERS :=		$(wildcard $(HID_OBJNAME)/include/*.h) \
-					$(wildcard $(HID_OBJNAME/include/hid/*.h))
-PHYS_HEADERS :=		$(wildcard $(PHYS_OBJNAME)/include/*.h)
+HID_SRC :=			$(wildcard $(HID_OBJNAME)/src/*.cpp) \
+					$(wildcard $(HID_OBJNAME)/src/hid/*.cpp)
+PHYS_SRC :=			$(wildcard $(PHYS_OBJNAME)/src/*.cpp)
+HID_HEADERS :=		$(wildcard $(HID_OBJNAME)/include/*.hpp) \
+					$(wildcard $(HID_OBJNAME)/include/hid/*.hpp)
+PHYS_HEADERS :=		$(wildcard $(PHYS_OBJNAME)/include/*.hpp)
 
 # Helper targets
 .PHONY : all
@@ -33,13 +33,13 @@ clean :
 	rm -rf $(PHYS_OBJNAME).uf2
 
 # Main targets
-$(HID_OBJNAME).uf2 : $(HID_SRC) $(HID_HEADERS) $(HID_OBJNAME)/CMakeLists.txt
+$(HID_OBJNAME).uf2 : /tmp/pico-sdk $(HID_SRC) $(HID_HEADERS) $(HID_OBJNAME)/CMakeLists.txt
 	mkdir -p $(HID_OBJNAME)/build
 	cd $(HID_OBJNAME)/build; PICO_SDK_PATH=/tmp/pico-sdk cmake ..
 	cd $(HID_OBJNAME)/build; make
 	cp $(HID_OBJNAME)/build/$(HID_OBJNAME).uf2 .
 	
-$(PHYS_OBJNAME).uf2 : $(PHYS_SRC) $(PHYS_HEADERS) $(PHYS_OBJNAME)/CMakeLists.txt
+$(PHYS_OBJNAME).uf2 : /tmp/pico-sdk $(PHYS_SRC) $(PHYS_HEADERS) $(PHYS_OBJNAME)/CMakeLists.txt
 	mkdir -p $(PHYS_OBJNAME)/build
 	cd $(PHYS_OBJNAME)/build; PICO_SDK_PATH=/tmp/pico-sdk cmake ..
 	cd $(PHYS_OBJNAME)/build; make
