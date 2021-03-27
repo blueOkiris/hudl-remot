@@ -1,12 +1,14 @@
 #include <pico/stdlib.h>
 #include <hardware/adc.h>
-#include <controller.h>
+#include <Controller.hpp>
 
-void controller__init(void) {
-    // Initialize buttons
+using namespace hudlremot;
+Controller::Controller() {
+    // Initialize buttons (skip 0 and 1 as those are fo uart)
     for(int i = 0; i < 9; i++) {
-        gpio_init(i);
-        gpio_set_dir(i, GPIO_IN);
+        gpio_init(i + 2);
+        gpio_set_dir(i + 2, GPIO_IN);
+        gpio_pull_up(i + 2);
     }
     
     // Initialize thumbstick
@@ -15,19 +17,18 @@ void controller__init(void) {
     adc_gpio_init(CONT_ADC_Y);
 }
 
-char controller__button_pressed(void) {
+uint8_t Controller::buttonState() const {
     for(int i = 0; i < 9; i++) {        // Go through all the buttons in order
-        char btn_state = gpio_get(i);
-        if(btn_state) {
+        if(!gpio_get(i + 2)) {
             return i;                   // Return the first one pressed
         }
     }
     return 0;                           // Otherwise return no btns pressed
 }
 
-void controller__read_thumbstick(uint16_t *ref_x, uint16_t *ref_y) {
+void Controller::readThumbstick(uint16_t &x, uint16_t &y) const {
     adc_select_input(CONT_ADC_X_NUM);
-    *ref_x = adc_read();
+    x = adc_read();
     adc_select_input(CONT_ADC_Y_NUM);
-    *ref_y = adc_read();
+    y = adc_read();
 }
