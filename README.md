@@ -30,6 +30,20 @@ This also doesn't take into account the cost of solder used, wire used, or the e
 
 ![system diagram](./docs/system-diagram.png)
 
+## Internal Systems
+
+Power system comprised of battery, power switch, charger, and 5V booster:
+![power system](./docs/power-system.jpg)
+
+HC-05 bluetooth module:
+![hc05](./docs/hc05-module.jpg)
+
+Controls system comprised of 9 buttons and a PSP thumbstick:
+![controller](./docs/controls-system.jpg)
+
+Rough holding together of components:
+![rough system pre-finish](./docs/together.jpg)
+
 ## Pico Stuff/Project layout
 
 Unfortunately, the pico uses the Cmake build system which is an utter piece of garbage, so you'll have to deal with that to build the project. Sorry. Nothing I can do.
