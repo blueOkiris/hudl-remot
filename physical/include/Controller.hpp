@@ -10,6 +10,11 @@
 #define CONT_ADC_Y              27
 #define CONT_ADC_Y_NUM          1
 
+#define X_MAX                   3200
+#define X_MIN                   800
+#define Y_MAX                   3500
+#define Y_MIN                   885
+
 namespace hudlremot {
     class Controller {
         public:

@@ -28,7 +28,12 @@ uint8_t Controller::buttonState() const {
 
 void Controller::readThumbstick(uint16_t &x, uint16_t &y) const {
     adc_select_input(CONT_ADC_X_NUM);
-    x = adc_read();
+    const auto rawX = adc_read();
     adc_select_input(CONT_ADC_Y_NUM);
-    y = adc_read();
+    const auto rawY = adc_read();
+    
+    x = (((double) (rawX - X_MIN)) / (X_MAX - X_MIN)) * 1023;
+    x = x > 1023 ? 1023 : x;
+    y = (((double) (rawY - Y_MIN)) / (Y_MAX - Y_MIN)) * 1023;
+    y = y > 1023 ? 1023 : y;
 }

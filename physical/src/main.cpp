@@ -24,12 +24,12 @@ int main() {
         // Send "b <button pin> \n"
         btnState = controller.buttonState();
         btnMsg[1] = btnState + '0';
-        bluetooth.putData((char *) btnMsg);
+        //bluetooth.putData((char *) btnMsg);
         
         // Always send the current stick input as "x <x val> \n y <y val> \n"
-        //controller.readThumbstick(stickX, stickY);
-        //sprintf(stickMsg, "x%u\r\ny%u\r\n", stickX, stickY);
-        //bluetooth.putData((char *) stickMsg);
+        controller.readThumbstick(stickX, stickY);
+        sprintf(stickMsg, "x%u\r\ny%u\r\n", stickX, stickY);
+        bluetooth.putData((char *) stickMsg);
         
         // Add a tad of delay
         sleep_ms(1000);
