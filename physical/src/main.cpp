@@ -5,8 +5,6 @@
 
 using namespace hudlremot;
 
-void testBluetooth();
-
 int main() {
     stdio_init_all();
     printf("Hudl remote physical device\n");
@@ -16,31 +14,17 @@ int main() {
     const Hc05 bluetooth(true);
     const Controller controller;
     
-    char btnState;
     uint16_t stickX, stickY;
-    char btnMsg[5] = { 'b', 0, '\r', '\n', '\0' };
-    char stickMsg[16];
+    uint8_t inputData[7];
     while(1) {
-        // Send "b <button pin> \n"
-        btnState = controller.buttonState();
-        btnMsg[1] = btnState + '0';
-        bluetooth.putData((char *) btnMsg);
-        
-        // Always send the current stick input as "x <x val> \n y <y val> \n"
+        inputData[0] = '\n';
+        inputData[1] = controller.buttonState();
         controller.readThumbstick(stickX, stickY);
-        sprintf(stickMsg, "x%u\r\ny%u\r\n", stickX, stickY);
-        bluetooth.putData((char *) stickMsg);
-        
-        // Add a tad of delay
-        sleep_ms(10);
-    }
-}
-
-void testBluetooth() {
-    const Hc05 bluetooth(true);
-    
-    while(1) {
-        bluetooth.putData("Hello, world!\r\n");
-        sleep_ms(1000);
+        inputData[2] = static_cast<uint8_t>(stickX >> 8);
+        inputData[3] = static_cast<uint8_t>(stickX & 0x00FF);
+        inputData[4] = static_cast<uint8_t>(stickY >> 8);
+        inputData[5] = static_cast<uint8_t>(stickY & 0x00FF);
+        inputData[6] = '\n';
+        bluetooth.putData(inputData, 7);
     }
 }

@@ -9,76 +9,147 @@
 
 using namespace hudlremot;
 
-void testReceiveBluetooth();
-void testStickXBluetoothParse();
-
-int main() {
+void testBluetooth() {
     // Remove when using usb
     stdio_init_all();
     
-    //testReceiveBluetooth();
-    //testStickXBluetoothParse();
-    
+    const Hc05 bluetooth(false);
+    uint8_t inputData[7];
+    while(1) {
+        if(bluetooth.canRead()) {
+            bluetooth.getData(inputData, 7);
+            
+            // Parity
+            while(inputData[0] != '\n' || inputData[6] != '\n') {
+                if(bluetooth.canRead()) {
+                    for(int i = 0; i < 6; i++) {
+                        inputData[i] = inputData[i + 1];
+                    }
+                    bluetooth.getData(inputData + 6, 1);    // Shift until okay
+                }
+            }
+            
+            printf(
+                "Received: 0x%x, 0x%x, 0x%x, 0x%x, 0x%x\r\n",
+                inputData[0],
+                
+                inputData[1],
+                (static_cast<uint16_t>(inputData[2]) << 8)
+                    + static_cast<uint16_t>(inputData[3]),
+                (static_cast<uint16_t>(inputData[4]) << 8)
+                    + static_cast<uint16_t>(inputData[5]),
+                
+                inputData[6]
+            );
+        }
+    }
+}
+
+void interpretBluetooth() {
     const Hc05 bluetooth(false);
     UsbHid usb;
     
+    uint8_t inputData[7];
+    bool hasReleased = true;
     while(1) {
-        if(bluetooth.canRead()) {
-            // Get the command character
-            auto curr = bluetooth.getDatum();
-            if(curr == 'x') {
-                usb.moveMouse(-4, 0);
-            }
-        }
         usb.update();
+        if(bluetooth.canRead()) {
+            bluetooth.getData(inputData, 7);
+            
+            // Parity
+            while(inputData[0] != '\n' || inputData[6] != '\n') {
+                usb.update();
+                if(bluetooth.canRead()) {
+                    for(int i = 0; i < 6; i++) {
+                        inputData[i] = inputData[i + 1];
+                    }
+                    bluetooth.getData(inputData + 6, 1);    // Shift until okay
+                }
+            }
+            
+            // Handle buttons
+            switch(static_cast<ControllerButton>(inputData[1])) {
+                case ControllerButton::MouseLeft:
+                    usb.clickMouse(true);
+                    break;
+                case ControllerButton::MouseRight:
+                    usb.clickMouse(true);
+                    break;
+                case ControllerButton::None:
+                    usb.releaseKey();
+                    hasReleased = true;
+                    break;
+                case ControllerButton::Rewind:
+                    if(!usb.isKeyPressed(HID_KEY_ARROW_LEFT)) {
+                        usb.releaseKey();
+                        usb.pressKey(HID_KEY_ARROW_LEFT);
+                    }
+                    break;
+                case ControllerButton::FastForward:
+                    if(!usb.isKeyPressed(HID_KEY_ARROW_RIGHT)) {
+                        usb.releaseKey();
+                        usb.pressKey(HID_KEY_ARROW_RIGHT);
+                    }
+                    break;
+                case ControllerButton::SlowRewind:
+                    if(!usb.isKeyPressed(HID_KEY_ARROW_UP)) {
+                        usb.releaseKey();
+                        usb.pressKey(HID_KEY_ARROW_UP);
+                    }
+                    break;
+                case ControllerButton::SlowForward:
+                    if(!usb.isKeyPressed(HID_KEY_ARROW_DOWN)) {
+                        usb.releaseKey();
+                        usb.pressKey(HID_KEY_ARROW_DOWN);
+                    }
+                    break;
+                case ControllerButton::Previous:
+                    if(hasReleased) {
+                        usb.pressKey(HID_KEY_ARROW_LEFT);
+                        usb.update();
+                        usb.releaseKey();
+                        usb.update();
+                        hasReleased = false;
+                    }
+                    break;
+                case ControllerButton::Next:
+                    if(hasReleased) {
+                        usb.pressKey(HID_KEY_ARROW_RIGHT);
+                        usb.update();
+                        usb.releaseKey();
+                        usb.update();
+                        hasReleased = false;
+                    }
+                    break;
+                case ControllerButton::Play:
+                    if(hasReleased) {
+                        usb.pressKey(HID_KEY_SPACE);
+                        usb.update();
+                        usb.releaseKey();
+                        usb.update();
+                        hasReleased = false;
+                    }
+                    break;
+            }
+            
+            // Handle stick positions
+            uint16_t stickX =
+                (static_cast<uint16_t>(inputData[2]) << 8)
+                + static_cast<uint16_t>(inputData[3]);
+            uint16_t stickY =
+                (static_cast<uint16_t>(inputData[4]) << 8)
+                + static_cast<uint16_t>(inputData[5]);
+            int16_t moveX = (static_cast<int16_t>(stickX) - 435)/  100;
+            int16_t moveY = (static_cast<int16_t>(stickY) - 435) / 100;
+            usb.moveMouse(-moveX, -moveY);
+        }
     }
+}
+
+
+int main() {
+    //testBluetooth();
+    interpretBluetooth();
     
     return 0;
-}
-
-void testReceiveBluetooth() {
-    const Hc05 bluetooth(false);
-    
-    while(1) {
-        while(bluetooth.canRead()) {
-            printf("%c", bluetooth.getDatum());
-        }
-    }
-}
-
-void testStickXBluetoothParse() {
-    const Hc05 bluetooth(false);
-    
-    char stickVal[5];
-    while(1) {
-        if(bluetooth.canRead()) {
-            auto curr = bluetooth.getDatum();
-            if(curr == 'x') {
-                int i = 0;
-                
-                while(!bluetooth.canRead());
-                curr = bluetooth.getDatum();
-                
-                while(curr != '\r') {
-                    stickVal[i++] = curr;
-                    
-                    while(!bluetooth.canRead());
-                    curr = bluetooth.getDatum();
-                }
-                
-                stickVal[4] = '\0';
-                uint16_t stickX = atoi((char *) stickVal);
-                int16_t moveX = (static_cast<int16_t>(stickX) - 435) / 50;
-                
-                printf(
-                    "Received: \"%s\", Parsed: %u, Move: %d\r\n",
-                    stickVal, stickX, moveX
-                );
-                
-                for(int j = 0; j < 5; j++) {
-                    stickVal[i] = '\0';
-                }
-            }
-        }
-    }
 }

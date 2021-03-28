@@ -16,11 +16,11 @@ bool Hc05::canRead() const {
     return uart_is_readable(_isUart0 ? uart0 : uart1);
 }
 
-uint8_t Hc05::getDatum() const {
-    return uart_getc(_isUart0 ? uart0 : uart1);
+void Hc05::getData(uint8_t *data, const size_t len) const {
+    uart_read_blocking(_isUart0 ? uart0 : uart1, data, len);
 }
 
 // Only used for debug
-void Hc05::putData(const char *str) const {
-    uart_puts(_isUart0 ? uart0 : uart1, str);
+void Hc05::putData(const uint8_t *data, const size_t len) const {
+    uart_write_blocking(_isUart0 ? uart0 : uart1, data, len);
 }

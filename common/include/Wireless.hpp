@@ -20,7 +20,7 @@ namespace hudlremot {
             Hc05(const bool isUart0);
             
             bool canRead() const;
-            uint8_t getDatum() const;
-            void putData(const char *str) const;
+            void getData(uint8_t *data, const size_t len) const;
+            void putData(const uint8_t *data, const size_t len) const;
     };
 }

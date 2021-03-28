@@ -9,8 +9,8 @@ namespace hudlremot {
     enum class ControllerButton {
         None = 0,
         Play = 9,
-        MouseLeft = 7,
-        MouseRight = 8,
+        MouseLeft = 8,
+        MouseRight = 7,
         Rewind = 4,
         FastForward = 1,
         SlowRewind = 5,
