@@ -42,6 +42,12 @@ Note that were it mass-produced, cost would almost certainly be even cheaper
 
 This also doesn't take into account the cost of solder used, wire used, or the enclosure.
 
+## "Final" Design
+
+It's pretty ugly, but I got it into a fairly rigid container so it can actually be used:
+
+![first design](./docs/first-case.jpg)
+
 ## System diagram
 
 ![system diagram](./docs/system-diagram.png)
