@@ -2,11 +2,15 @@
 HID_OBJNAME :=		hid
 PHYS_OBJNAME :=		physical
 HID_SRC :=			$(wildcard $(HID_OBJNAME)/src/*.cpp) \
-					$(wildcard $(HID_OBJNAME)/src/hid/*.cpp)
-PHYS_SRC :=			$(wildcard $(PHYS_OBJNAME)/src/*.cpp)
+					$(wildcard $(HID_OBJNAME)/src/hid/*.cpp) \
+					$(wildcard common/src/*.cpp)
+PHYS_SRC :=			$(wildcard $(PHYS_OBJNAME)/src/*.cpp) \
+					$(wildcard common/src/*.cpp)
 HID_HEADERS :=		$(wildcard $(HID_OBJNAME)/include/*.hpp) \
-					$(wildcard $(HID_OBJNAME)/include/hid/*.hpp)
-PHYS_HEADERS :=		$(wildcard $(PHYS_OBJNAME)/include/*.hpp)
+					$(wildcard $(HID_OBJNAME)/include/hid/*.hpp) \
+					$(wildcard common/include/*.hpp)
+PHYS_HEADERS :=		$(wildcard $(PHYS_OBJNAME)/include/*.hpp) \
+					$(wildcard common/include/*.hpp)
 
 # Helper targets
 .PHONY : all

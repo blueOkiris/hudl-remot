@@ -13,7 +13,7 @@ int main() {
     
     //testBluetooth();
     
-    const Hc05 bluetooth;
+    const Hc05 bluetooth(true);
     const Controller controller;
     
     char btnState;
@@ -37,7 +37,7 @@ int main() {
 }
 
 void testBluetooth() {
-    const Hc05 bluetooth;
+    const Hc05 bluetooth(true);
     
     while(1) {
         bluetooth.putData("Hello, world!\r\n");
