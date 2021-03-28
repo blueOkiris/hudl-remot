@@ -67,6 +67,14 @@ void UsbHid::update() {
                 REPORT_ID_MOUSE, _mouseBtn, _deltaX, _deltaY, 0, 0
             );
             _deltaX = _deltaY = 0;
+            
+            // Unclick the mouse
+            if(_mouseBtn != 0) {
+                board_delay(10);
+                tud_hid_mouse_report(
+                    REPORT_ID_MOUSE, 0, 0, 0, 0, 0
+                );
+            }
             _mouseBtn = 0;
 
             // delay a bit before attempt to send keyboard report
@@ -88,6 +96,7 @@ void UsbHid::update() {
             // send empty key report if previously has key pressed
             if(_hasKey) {
                 tud_hid_keyboard_report(REPORT_ID_KEYBOARD, 0, NULL);
+                board_delay(10);
             }
             _hasKey = 0;
         }

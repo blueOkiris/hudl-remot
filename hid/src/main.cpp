@@ -73,34 +73,38 @@ void interpretBluetooth() {
                     usb.clickMouse(true);
                     break;
                 case ControllerButton::MouseRight:
-                    usb.clickMouse(true);
+                    usb.clickMouse(false);
                     break;
                 case ControllerButton::None:
                     usb.releaseKey();
                     hasReleased = true;
                     break;
                 case ControllerButton::Rewind:
-                    if(!usb.isKeyPressed(HID_KEY_ARROW_LEFT)) {
+                    if(hasReleased) {
                         usb.releaseKey();
                         usb.pressKey(HID_KEY_ARROW_LEFT);
+                        hasReleased = false;
                     }
                     break;
                 case ControllerButton::FastForward:
-                    if(!usb.isKeyPressed(HID_KEY_ARROW_RIGHT)) {
+                    if(hasReleased) {
                         usb.releaseKey();
                         usb.pressKey(HID_KEY_ARROW_RIGHT);
+                        hasReleased = false;
                     }
                     break;
                 case ControllerButton::SlowRewind:
-                    if(!usb.isKeyPressed(HID_KEY_ARROW_UP)) {
+                    if(hasReleased) {
                         usb.releaseKey();
                         usb.pressKey(HID_KEY_ARROW_UP);
+                        hasReleased = false;
                     }
                     break;
                 case ControllerButton::SlowForward:
-                    if(!usb.isKeyPressed(HID_KEY_ARROW_DOWN)) {
+                    if(hasReleased) {
                         usb.releaseKey();
                         usb.pressKey(HID_KEY_ARROW_DOWN);
+                        hasReleased = false;
                     }
                     break;
                 case ControllerButton::Previous:
